@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品カテゴリ プレビュー (3列表示確定版)</title>
+    <style>
+        /* --- 全体の設定 --- */
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans CJK JP', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- カテゴリ共通 --- */
+        .category-section {
+            margin-top: 50px;
+        }
+        .category-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #222;
+            border-bottom: 2px solid #D3A24F;
+            padding-bottom: 12px;
+            margin: 0 0 10px 0;
+        }
+        .category-description {
+            font-size: 15px;
+            color: #555;
+            margin: 0 0 30px 0;
+        }
+
+        /* --- ★修正点: 横スクロールの仕組みをFlexboxに変更 --- */
+        .product-scroll-container {
+            overflow-x: auto;
+            padding-bottom: 15px;
+            /* スクロールバーのデザイン */
+            scrollbar-width: thin;
+            scrollbar-color: #ccc #f8f9fa;
+        }
+        .product-scroll-container::-webkit-scrollbar { height: 8px; }
+        .product-scroll-container::-webkit-scrollbar-track { background: #f8f9fa; }
+        .product-scroll-container::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
+
+        .product-list-scroll {
+            display: flex; /* 横並びにする */
+            gap: 24px;     /* 商品間のスペース */
+        }
+        
+        /* --- ★修正点: 商品カードの幅の指定方法を変更 --- */
+        .product-card {
+            /* flex: flex-grow(伸びるか), flex-shrink(縮むか), flex-basis(基本の幅) */
+            /* 伸びず、縮まず、基本幅は「(コンテナ幅 - 隙間2つ分) / 3」 */
+            flex: 0 0 calc((100% - 48px) / 3);
+            
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* --- 以下の部分は変更なし --- */
+        .product-image-placeholder {
+            height: 220px; display: flex; align-items: center; justify-content: center; color: #adb5bd; font-size: 16px;
+        }
+        .product-image-placeholder.color-1 { background-color: #f0e6d2; }
+        .product-image-placeholder.color-2 { background-color: #d2e4f0; }
+        .product-image-placeholder.color-3 { background-color: #e2f0d2; }
+        .product-image-placeholder.color-4 { background-color: #f0d2d2; }
+        .product-image-placeholder.color-5 { background-color: #e8e8e8; }
+        
+        .product-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .product-name { font-size: 18px; font-weight: bold; margin: 0 0 8px 0; }
+        .product-description-card { font-size: 14px; color: #666; line-height: 1.6; margin: 0 0 16px 0; flex-grow: 1; }
+        .product-price { font-size: 16px; font-weight: bold; text-align: right; margin: 0; }
+        
+        /* --- スマートフォン向けの調整 --- */
+        @media (max-width: 768px) {
+            .category-title { font-size: 22px; }
+            .product-card {
+                /* スマホではカードの基本幅を80%に */
+                flex-basis: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ▼ カテゴリ1: ギフト・飲み比べセット (カルーセル) ▼ -->
+        <div class="category-section">
+            <h2 class="category-title">ギフト・飲み比べセット</h2>
+            <p class="category-description">大切な人への贈り物や、色々な味を楽しみたい方に。パーティーにも最適です。</p>
+            <div class="product-scroll-container">
+                <div class="product-list-scroll">
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-1">商品画像</div><div class="product-info"><h3 class="product-name">人気のギフトセットA</h3><p class="product-description-card">定番ビールを詰め合わせた、誰にでも喜ばれる王道のセットです。</p><p class="product-price">¥ 4,500~</p></div></a>
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-2">商品画像</div><div class="product-info"><h3 class="product-name">季節限定 飲み比べセット</h3><p class="product-description-card">今しか飲めない特別なビールが入った、ビール好きにはたまらないセット。</p><p class="product-price">¥ 5,200~</p></div></a>
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-3">商品画像</div><div class="product-info"><h3 class="product-name">猫の8本セット</h3><p class="product-description-card">可愛い猫ラベルのベルギービールを集めました。猫好きの方へのギフトに。</p><p class="product-price">¥ 4,980~</p></div></a>
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-4">商品画像</div><div class="product-info"><h3 class="product-name">ドイツビールギフト</h3><p class="product-description-card">ドイツビールを代表するスタイル、銘柄を8種類、1本ずつ集めたセット。</p><p class="product-price">¥ 3,527~</p></div></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ▼ カテゴリ2: 単品ビール (カルーセル) ▼ -->
+        <div class="category-section">
+            <h2 class="category-title">単品ビール (エール、ラガーなど)</h2>
+            <p class="category-description">世界中の個性豊かなビールから、あなただけのお気に入りの一本を見つけてください。</p>
+            <div class="product-scroll-container">
+                <div class="product-list-scroll">
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-3">商品画像</div><div class="product-info"><h3 class="product-name">フランツィスカーナー</h3><p class="product-description-card">南ドイツの伝統的な白ビール。豊かな香りとクリーミーな泡が楽しめます。</p><p class="product-price">¥ 680~</p></div></a>
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-5">商品画像</div><div class="product-info"><h3 class="product-name">ベアレン クラシック</h3><p class="product-description-card">100年前のドイツのレシピを再現した、コクと苦味のバランスが良い本格ラガー。</p><p class="product-price">¥ 630~</p></div></a>
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-1">商品画像</div><div class="product-info"><h3 class="product-name">パウズヴァイスハイト</h3><p class="product-description-card">バイエルンの小さな醸造所が造る、「白」と「知性」を意味する無濾過ビール。</p><p class="product-price">¥ 580~</p></div></a>
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-2">商品画像</div><div class="product-info"><h3 class="product-name">ブドバー</h3><p class="product-description-card">世界で最も飲まれるピルスナースタイルの元祖。700年の歴史を持つ伝統の味。</p><p class="product-price">¥ 550~</p></div></a>
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-4">商品画像</div><div class="product-info"><h3 class="product-name">アインベッカー マイ・ボック</h3><p class="product-description-card">3ヶ月熟成させた麦の旨味と甘みが凝縮された、アルコール度数高めのビール。</p><p class="product-price">¥ 500~</p></div></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ▼ カテゴリ3: ビールを愉しむアイテム (カルーセル) ▼ -->
+        <div class="category-section">
+            <h2 class="category-title">ビールを愉しむアイテム (グラス・おつまみ)</h2>
+            <p class="category-description">ビールの時間をさらに豊かにする、こだわりの専用グラスや絶品おつまみ。</p>
+            <div class="product-scroll-container">
+                <div class="product-list-scroll">
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-5">商品画像</div><div class="product-info"><h3 class="product-name">RASTAL テク 3.0 グラス</h3><p class="product-description-card">ビールの香りを最大限に引き出すために設計された、世界最高峰のビールグラス。</p><p class="product-price">¥ 880~</p></div></a>
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-1">商品画像</div><div class="product-info"><h3 class="product-name">ハライコ ウィンナー</h3><p class="product-description-card">上質な豚肉と天然岩塩からつくられた、本場ドイツの缶詰タイプのウィンナー。</p><p class="product-price">¥ 980~</p></div></a>
+                    <a href="#" class="product-card"><div class="product-image-placeholder color-2">商品画像</div><div class="product-info"><h3 class="product-name">ドイツ産 ホワイトアスパラガス</h3><p class="product-description-card">シャキっとした歯ごたえと上品な甘み。ビールのお供に最高の贅沢を。</p><p class="product-price">¥ 430~</p></div></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
